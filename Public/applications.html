@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>My Applications | InternHub</title>
+
+    <link
+        rel="stylesheet"
+        href="css/style.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="css/responsive.css"
+    >
+
+</head>
+
+
+<body>
+
+
+    <!-- ================= NAVBAR ================= -->
+
+    <header class="navbar">
+
+        <div class="container nav-container">
+
+            <a href="index.html" class="logo">
+                Intern<span>Hub</span>
+            </a>
+
+            <nav
+                class="nav-links"
+                aria-label="Main navigation"
+            >
+
+                <a href="index.html">
+                    Home
+                </a>
+
+                <a href="internships.html">
+                    Internships
+                </a>
+
+                <a
+                    href="applications.html"
+                    aria-current="page"
+                >
+                    My Applications
+                </a>
+
+                <a href="about.html">
+                    About
+                </a>
+
+            </nav>
+
+        </div>
+
+    </header>
+
+
+
+    <!-- ================= PAGE HEADER ================= -->
+
+    <section class="page-header">
+
+        <div class="container">
+
+            <p class="hero-badge">
+                APPLICATION TRACKER
+            </p>
+
+            <h1>
+                My Applications
+            </h1>
+
+            <p>
+                Track the internships you have applied for.
+            </p>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ================= MAIN ================= -->
+
+    <main class="container applications-section">
+
+
+        <!-- Loading -->
+
+        <div
+            id="loadingState"
+            class="state-box"
+        >
+
+            <div class="spinner"></div>
+
+            <p>
+                Loading applications...
+            </p>
+
+        </div>
+
+
+
+        <!-- Error -->
+
+        <div
+            id="errorState"
+            class="state-box error-state"
+            hidden
+        >
+
+            <div class="state-icon">
+                ⚠️
+            </div>
+
+            <h2>
+                Unable to load applications
+            </h2>
+
+            <p id="errorMessage">
+                Something went wrong.
+            </p>
+
+            <button
+                id="retryButton"
+                class="btn primary-btn"
+            >
+                Try Again
+            </button>
+
+        </div>
+
+
+
+        <!-- Empty -->
+
+        <div
+            id="emptyState"
+            class="state-box"
+            hidden
+        >
+
+            <div class="state-icon">
+                📋
+            </div>
+
+            <h2>
+                No applications yet
+            </h2>
+
+            <p>
+                You haven't applied for any internships yet.
+            </p>
+
+            <a
+                href="internships.html"
+                class="btn primary-btn"
+            >
+                Explore Internships
+            </a>
+
+        </div>
+
+
+
+        <!-- Applications -->
+
+        <section
+            id="applicationsContent"
+            hidden
+        >
+
+            <div class="results-header">
+
+                <div>
+
+                    <h2>
+                        Your Applications
+                    </h2>
+
+                    <p id="applicationCount">
+                        0 applications
+                    </p>
+
+                </div>
+
+                <a
+                    href="internships.html"
+                    class="btn secondary-btn"
+                >
+                    + Find More Internships
+                </a>
+
+            </div>
+
+
+            <div
+                id="applicationsList"
+                class="application-list"
+            >
+            </div>
+
+        </section>
+
+    </main>
+
+
+
+    <!-- ================= FOOTER ================= -->
+
+    <footer class="footer">
+
+        <div class="container footer-content">
+
+            <div>
+
+                <h3>
+                    InternHub
+                </h3>
+
+                <p>
+                    Helping students discover meaningful
+                    internship opportunities.
+                </p>
+
+            </div>
+
+
+            <div>
+
+                <h4>
+                    Quick Links
+                </h4>
+
+                <a href="index.html">
+                    Home
+                </a>
+
+                <a href="internships.html">
+                    Internships
+                </a>
+
+                <a href="applications.html">
+                    Applications
+                </a>
+
+                <a href="about.html">
+                    About
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <div class="footer-bottom">
+
+            <p>
+                © 2026 InternHub. Built for students.
+            </p>
+
+        </div>
+
+    </footer>
+
+
+
+    <script src="js/common.js"></script>
+
+    <script src="js/applications.js"></script>
+
+</body>
+
+</html>

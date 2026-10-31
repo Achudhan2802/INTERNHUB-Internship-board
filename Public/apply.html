@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Apply | InternHub</title>
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+
+<body>
+
+    <!-- ================= NAVBAR ================= -->
+
+    <header class="navbar">
+        <div class="container nav-container">
+
+            <a href="index.html" class="logo">
+                Intern<span>Hub</span>
+            </a>
+
+            <nav class="nav-links" aria-label="Main navigation">
+                <a href="index.html">Home</a>
+                <a href="internships.html">Internships</a>
+                <a href="applications.html">My Applications</a>
+                <a href="about.html">About</a>
+            </nav>
+
+        </div>
+    </header>
+
+
+    <!-- ================= PAGE HEADER ================= -->
+
+    <section class="page-header">
+        <div class="container">
+
+            <a href="internships.html" class="back-link">
+                ← Back to Internships
+            </a>
+
+            <p class="hero-badge">
+                APPLICATION
+            </p>
+
+            <h1>Apply for Internship</h1>
+
+            <p>
+                Take the next step towards your career.
+            </p>
+
+        </div>
+    </section>
+
+
+    <!-- ================= APPLICATION ================= -->
+
+    <main class="container apply-section">
+
+        <!-- Loading -->
+
+        <div id="loadingState" class="state-box">
+
+            <div class="spinner"></div>
+
+            <p>
+                Loading internship information...
+            </p>
+
+        </div>
+
+
+        <!-- Error -->
+
+        <div
+            id="errorState"
+            class="state-box error-state"
+            hidden
+        >
+
+            <div class="state-icon">
+                ⚠️
+            </div>
+
+            <h2>
+                Unable to load internship
+            </h2>
+
+            <p id="errorMessage">
+                Something went wrong.
+            </p>
+
+            <button
+                id="retryButton"
+                class="btn primary-btn"
+            >
+                Try Again
+            </button>
+
+        </div>
+
+
+        <!-- Application Content -->
+
+        <div id="applyContent" hidden>
+
+            <div class="apply-layout">
+
+
+                <!-- ================= FORM ================= -->
+
+                <section class="form-card">
+
+                    <h2>
+                        Your Application
+                    </h2>
+
+                    <p class="form-intro">
+                        Fill in your details below to apply.
+                    </p>
+
+
+                    <form id="applicationForm" novalidate>
+
+
+                        <!-- Name -->
+
+                        <div class="form-group">
+
+                            <label for="name">
+                                Full Name
+                                <span aria-hidden="true">*</span>
+                            </label>
+
+                            <input
+                                type="text"
+                                id="name"
+                                name="name"
+                                placeholder="Enter your full name"
+                                autocomplete="name"
+                                required
+                            >
+
+                            <small
+                                id="nameError"
+                                class="field-error"
+                                role="alert"
+                            ></small>
+
+                        </div>
+
+
+                        <!-- Email -->
+
+                        <div class="form-group">
+
+                            <label for="email">
+                                Email Address
+                                <span aria-hidden="true">*</span>
+                            </label>
+
+                            <input
+                                type="email"
+                                id="email"
+                                name="email"
+                                placeholder="you@example.com"
+                                autocomplete="email"
+                                required
+                            >
+
+                            <small
+                                id="emailError"
+                                class="field-error"
+                                role="alert"
+                            ></small>
+
+                        </div>
+
+
+                        <!-- Portfolio -->
+
+                        <div class="form-group">
+
+                            <label for="portfolio">
+                                Portfolio URL
+                                <span class="optional">
+                                    (Optional)
+                                </span>
+                            </label>
+
+                            <input
+                                type="url"
+                                id="portfolio"
+                                name="portfolio"
+                                placeholder="https://yourportfolio.com"
+                                autocomplete="url"
+                            >
+
+                            <small
+                                id="portfolioError"
+                                class="field-error"
+                                role="alert"
+                            ></small>
+
+                        </div>
+
+
+                        <!-- Submit -->
+
+                        <button
+                            type="submit"
+                            id="submitButton"
+                            class="btn primary-btn submit-btn"
+                        >
+                            Submit Application →
+                        </button>
+
+                    </form>
+
+
+                    <!-- Success -->
+
+                    <div
+                        id="successState"
+                        class="success-box"
+                        hidden
+                    >
+
+                        <div class="success-icon">
+                            ✓
+                        </div>
+
+                        <h2>
+                            Application Submitted!
+                        </h2>
+
+                        <p id="successMessage">
+                            Your application has been received.
+                        </p>
+
+                        <a
+                            href="applications.html"
+                            class="btn primary-btn"
+                        >
+                            View My Applications
+                        </a>
+
+                    </div>
+
+
+                    <!-- Form Error -->
+
+                    <div
+                        id="formError"
+                        class="form-error-box"
+                        role="alert"
+                        hidden
+                    >
+                    </div>
+
+                </section>
+
+
+                <!-- ================= INTERNSHIP SUMMARY ================= -->
+
+                <aside class="application-card">
+
+                    <h2>
+                        Applying For
+                    </h2>
+
+                    <div class="apply-summary">
+
+                        <h3 id="internshipTitle">
+                            Loading...
+                        </h3>
+
+                        <p id="internshipDomain">
+                            -
+                        </p>
+
+                        <div class="summary-item">
+                            📍
+                            <span id="internshipLocation">
+                                -
+                            </span>
+                        </div>
+
+                        <div class="summary-item">
+                            💼
+                            <span id="internshipMode">
+                                -
+                            </span>
+                        </div>
+
+                        <div class="summary-item">
+                            👥
+                            <span id="internshipOpenings">
+                                -
+                            </span>
+                        </div>
+
+                    </div>
+
+                </aside>
+
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <!-- ================= FOOTER ================= -->
+
+    <footer class="footer">
+
+        <div class="container footer-content">
+
+            <div>
+
+                <h3>InternHub</h3>
+
+                <p>
+                    Helping students discover meaningful
+                    internship opportunities.
+                </p>
+
+            </div>
+
+            <div>
+
+                <h4>Quick Links</h4>
+
+                <a href="index.html">Home</a>
+                <a href="internships.html">Internships</a>
+                <a href="applications.html">Applications</a>
+                <a href="about.html">About</a>
+
+            </div>
+
+        </div>
+
+        <div class="footer-bottom">
+
+            <p>
+                © 2026 InternHub. Built for students.
+            </p>
+
+        </div>
+
+    </footer>
+
+
+    <script src="js/common.js"></script>
+    <script src="js/apply.js"></script>
+
+</body>
+
+</html>

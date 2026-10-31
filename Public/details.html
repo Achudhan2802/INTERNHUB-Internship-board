@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Internship Details | InternHub</title>
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+
+<body>
+
+    <!-- ================= NAVBAR ================= -->
+    <header class="navbar">
+        <div class="container nav-container">
+
+            <a href="index.html" class="logo">
+                Intern<span>Hub</span>
+            </a>
+
+            <nav class="nav-links" aria-label="Main navigation">
+                <a href="index.html">Home</a>
+                <a href="internships.html">Internships</a>
+                <a href="applications.html">My Applications</a>
+                <a href="about.html">About</a>
+            </nav>
+
+        </div>
+    </header>
+
+
+    <!-- ================= PAGE HEADER ================= -->
+    <section class="page-header">
+        <div class="container">
+
+            <a href="internships.html" class="back-link">
+                ← Back to Internships
+            </a>
+
+            <p class="hero-badge">INTERNSHIP OPPORTUNITY</p>
+
+            <h1 id="detailsTitle">
+                Loading internship...
+            </h1>
+
+            <p id="detailsDomain">
+                Please wait while we load the internship details.
+            </p>
+
+        </div>
+    </section>
+
+
+    <!-- ================= DETAILS ================= -->
+    <main class="container details-section">
+
+        <!-- Loading -->
+        <div id="loadingState" class="state-box">
+            <div class="spinner"></div>
+            <p>Loading internship details...</p>
+        </div>
+
+
+        <!-- Error -->
+        <div id="errorState" class="state-box error-state" hidden>
+
+            <div class="state-icon">⚠️</div>
+
+            <h2>Unable to load internship</h2>
+
+            <p id="errorMessage">
+                Something went wrong.
+            </p>
+
+            <button id="retryButton" class="btn primary-btn">
+                Try Again
+            </button>
+
+        </div>
+
+
+        <!-- Details Content -->
+        <div id="detailsContent" hidden>
+
+            <div class="details-layout">
+
+                <!-- ================= MAIN CONTENT ================= -->
+                <article class="details-card">
+
+                    <div class="details-top">
+
+                        <div>
+                            <span id="detailsMode" class="mode-badge">
+                                Remote
+                            </span>
+
+                            <h2 id="detailsTitleMain">
+                                Internship Title
+                            </h2>
+
+                            <p id="detailsLocation">
+                                📍 Location
+                            </p>
+                        </div>
+
+                    </div>
+
+
+                    <!-- About -->
+                    <section class="details-block">
+
+                        <h3>About this Internship</h3>
+
+                        <p id="detailsDescription">
+                            This internship provides students with an
+                            opportunity to gain practical industry experience.
+                        </p>
+
+                    </section>
+
+
+                    <!-- Requirements -->
+                    <section class="details-block">
+
+                        <h3>What you'll work with</h3>
+
+                        <div id="detailsSkills" class="skills-container">
+                        </div>
+
+                    </section>
+
+
+                    <!-- Requirements -->
+                    <section class="details-block">
+
+                        <h3>Requirements</h3>
+
+                        <ul id="detailsRequirements" class="requirements-list">
+                        </ul>
+
+                    </section>
+
+                </article>
+
+
+                <!-- ================= SIDE CARD ================= -->
+                <aside class="application-card">
+
+                    <h2>Internship Overview</h2>
+
+                    <div class="overview-item">
+
+                        <span class="overview-label">
+                            Domain
+                        </span>
+
+                        <strong id="overviewDomain">
+                            -
+                        </strong>
+
+                    </div>
+
+
+                    <div class="overview-item">
+
+                        <span class="overview-label">
+                            Work Mode
+                        </span>
+
+                        <strong id="overviewMode">
+                            -
+                        </strong>
+
+                    </div>
+
+
+                    <div class="overview-item">
+
+                        <span class="overview-label">
+                            Location
+                        </span>
+
+                        <strong id="overviewLocation">
+                            -
+                        </strong>
+
+                    </div>
+
+
+                    <div class="overview-item">
+
+                        <span class="overview-label">
+                            Openings
+                        </span>
+
+                        <strong id="overviewOpenings">
+                            -
+                        </strong>
+
+                    </div>
+
+
+                    <a
+                        id="applyButton"
+                        href="#"
+                        class="btn primary-btn full-width"
+                    >
+                        Apply Now →
+                    </a>
+
+                </aside>
+
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <!-- ================= FOOTER ================= -->
+    <footer class="footer">
+
+        <div class="container footer-content">
+
+            <div>
+                <h3>InternHub</h3>
+                <p>
+                    Helping students discover meaningful
+                    internship opportunities.
+                </p>
+            </div>
+
+            <div>
+                <h4>Quick Links</h4>
+
+                <a href="index.html">Home</a>
+                <a href="internships.html">Internships</a>
+                <a href="applications.html">Applications</a>
+                <a href="about.html">About</a>
+            </div>
+
+        </div>
+
+        <div class="footer-bottom">
+            <p>© 2026 InternHub. Built for students.</p>
+        </div>
+
+    </footer>
+
+
+    <script src="js/common.js"></script>
+    <script src="js/details.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="description"
+        content="Browse and search internship opportunities on InternHub.">
+
+    <title>Internships | InternHub</title>
+
+    <link
+        rel="stylesheet"
+        href="css/style.css">
+
+    <link
+        rel="stylesheet"
+        href="css/responsive.css">
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================
+     NAVBAR
+===================================== -->
+
+<header class="navbar">
+
+    <div class="container navbar-inner">
+
+        <a
+            href="index.html"
+            class="logo">
+
+            🚀 Intern<span>Hub</span>
+
+        </a>
+
+
+        <nav aria-label="Main navigation">
+
+            <ul class="nav-links">
+
+                <li>
+                    <a href="index.html">
+                        Home
+                    </a>
+                </li>
+
+                <li>
+                    <a
+                        href="internships.html"
+                        class="active">
+                        Internships
+                    </a>
+                </li>
+
+                <li>
+                    <a href="applications.html">
+                        My Applications
+                    </a>
+                </li>
+
+                <li>
+                    <a href="about.html">
+                        About
+                    </a>
+                </li>
+
+            </ul>
+
+        </nav>
+
+    </div>
+
+</header>
+
+
+
+<!-- =====================================
+     MAIN
+===================================== -->
+
+<main>
+
+
+<!-- =====================================
+     PAGE HEADER
+===================================== -->
+
+<section class="page-header">
+
+    <div class="container">
+
+        <span class="hero-badge">
+            💼 Career opportunities
+        </span>
+
+        <h1>
+            Explore Internships
+        </h1>
+
+        <p>
+            Find internships that match your
+            skills, interests and career goals.
+        </p>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================
+     SEARCH AND FILTERS
+===================================== -->
+
+<section class="section">
+
+    <div class="container">
+
+
+        <form
+            id="filterForm"
+            class="filters">
+
+
+            <!-- SEARCH -->
+
+            <div class="filter-search">
+
+                <label for="searchInput">
+                    Search internships
+                </label>
+
+                <input
+                    type="search"
+                    id="searchInput"
+                    class="form-control"
+                    placeholder="Search by title, skill or location">
+
+            </div>
+
+
+            <!-- FILTER GRID -->
+
+            <div class="filter-grid">
+
+
+                <div>
+
+                    <label for="domainSelect">
+                        Domain
+                    </label>
+
+                    <select
+                        id="domainSelect"
+                        class="form-control">
+
+                        <option value="">
+                            All Domains
+                        </option>
+
+                        <option value="Full Stack Development">
+                            Full Stack Development
+                        </option>
+
+                        <option value="UI/UX">
+                            UI/UX
+                        </option>
+
+                        <option value="Data Analytics">
+                            Data Analytics
+                        </option>
+
+                        <option value="Cyber Security">
+                            Cyber Security
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div>
+
+                    <label for="modeSelect">
+                        Work Mode
+                    </label>
+
+                    <select
+                        id="modeSelect"
+                        class="form-control">
+
+                        <option value="">
+                            All Modes
+                        </option>
+
+                        <option value="Remote">
+                            Remote
+                        </option>
+
+                        <option value="Hybrid">
+                            Hybrid
+                        </option>
+
+                        <option value="On-site">
+                            On-site
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="filter-buttons">
+
+                    <button
+                        type="submit"
+                        class="btn btn-primary">
+
+                        🔍 Search
+
+                    </button>
+
+                    <button
+                        type="button"
+                        id="clearButton"
+                        class="btn btn-secondary">
+
+                        Clear
+
+                    </button>
+
+                </div>
+
+
+            </div>
+
+
+        </form>
+
+
+
+        <!-- =====================================
+             RESULTS HEADER
+        ===================================== -->
+
+        <div class="results-header">
+
+            <div>
+
+                <h2 class="section-title">
+                    Available Internships
+                </h2>
+
+                <p
+                    id="resultCount"
+                    class="section-subtitle"
+                    aria-live="polite">
+
+                    Loading internships...
+
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =====================================
+             LOADING
+        ===================================== -->
+
+        <div
+            id="loadingState"
+            class="state-box">
+
+            <div class="spinner"></div>
+
+            <h3>
+                Finding internships...
+            </h3>
+
+            <p>
+                Please wait while we load
+                the latest opportunities.
+            </p>
+
+        </div>
+
+
+
+        <!-- =====================================
+             ERROR
+        ===================================== -->
+
+        <div
+            id="errorState"
+            class="state-box error-state"
+            hidden>
+
+            <div class="state-icon">
+                ⚠️
+            </div>
+
+            <h3>
+                Something went wrong
+            </h3>
+
+            <p id="errorMessage">
+                Unable to load internships.
+            </p>
+
+            <button
+                id="retryButton"
+                class="btn btn-primary">
+
+                Try Again
+
+            </button>
+
+        </div>
+
+
+
+        <!-- =====================================
+             EMPTY
+        ===================================== -->
+
+        <div
+            id="emptyState"
+            class="state-box"
+            hidden>
+
+            <div class="state-icon">
+                🔍
+            </div>
+
+            <h3>
+                No internships found
+            </h3>
+
+            <p>
+                Try changing your search or filters.
+            </p>
+
+        </div>
+
+
+
+        <!-- =====================================
+             CARDS
+        ===================================== -->
+
+        <div
+            id="internshipList"
+            class="card-grid">
+
+        </div>
+
+
+
+        <!-- =====================================
+             PAGINATION
+        ===================================== -->
+
+        <nav
+            id="pagination"
+            class="pagination"
+            aria-label="Internship pages">
+
+        </nav>
+
+
+    </div>
+
+</section>
+
+</main>
+
+
+
+<!-- =====================================
+     FOOTER
+===================================== -->
+
+<footer class="footer">
+
+    <div class="container">
+
+
+        <div class="footer-grid">
+
+
+            <div>
+
+                <h3>
+                    🚀 InternHub
+                </h3>
+
+                <p>
+                    Connecting students with
+                    meaningful career opportunities.
+                </p>
+
+            </div>
+
+
+            <div>
+
+                <h3>
+                    Explore
+                </h3>
+
+                <a href="index.html">
+                    Home
+                </a>
+
+                <a href="internships.html">
+                    Internships
+                </a>
+
+                <a href="about.html">
+                    About
+                </a>
+
+            </div>
+
+
+            <div>
+
+                <h3>
+                    Account
+                </h3>
+
+                <a href="applications.html">
+                    My Applications
+                </a>
+
+            </div>
+
+
+        </div>
+
+
+        <div class="footer-bottom">
+
+            <p>
+                © 2026 InternHub.
+                Built for students.
+            </p>
+
+        </div>
+
+
+    </div>
+
+</footer>
+
+
+
+<script src="js/common.js"></script>
+
+<script src="js/internships.js"></script>
+
+
+</body>
+
+</html>
