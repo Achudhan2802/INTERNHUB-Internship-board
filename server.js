@@ -614,10 +614,4 @@ app.get("/api/applications", (req, res) => {
 // START SERVER
 // ===============================
 
-app.listen(PORT, () => {
-
-    console.log(
-        `InternHub running at http://localhost:${PORT}`
-    );
-
-});
+module.exports = app;
