@@ -40,7 +40,7 @@ const applyButton =
 
 
 // Backend API
-const API_URL = "http://localhost:5000";
+const API_URL = "https://internship-api-2-otwi.onrender.com";
 
 
 // Get internship ID from URL

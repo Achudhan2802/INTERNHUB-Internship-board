@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:5000";
+const API_URL = "https://internship-api-2-otwi.onrender.com";
 const filterForm = document.getElementById("filterForm");
 const searchInput = document.getElementById("searchInput");
 const domainSelect = document.getElementById("domainSelect");

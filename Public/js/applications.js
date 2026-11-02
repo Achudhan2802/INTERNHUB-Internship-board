@@ -7,7 +7,7 @@ const applicationsContent = document.getElementById("applicationsContent");
 const applicationsList = document.getElementById("applicationsList");
 const applicationCount = document.getElementById("applicationCount");
 
-const API_URL = "http://localhost:5000";
+const API_URL = "https://internship-api-2-otwi.onrender.com";
 
 // =====================================================
 // LOAD APPLICATIONS
