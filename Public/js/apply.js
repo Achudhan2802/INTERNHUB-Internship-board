@@ -1,7 +1,11 @@
+const API_URL = "http://localhost:5000";
+
 const loadingState = document.getElementById("loadingState");
 const errorState = document.getElementById("errorState");
 const errorMessage = document.getElementById("errorMessage");
+
 const retryButton = document.getElementById("retryButton");
+
 const applyContent = document.getElementById("applyContent");
 const applicationForm = document.getElementById("applicationForm");
 
@@ -19,18 +23,33 @@ const formError = document.getElementById("formError");
 const successState = document.getElementById("successState");
 const successMessage = document.getElementById("successMessage");
 
-const internshipTitle = document.getElementById("internshipTitle");
-const internshipDomain = document.getElementById("internshipDomain");
-const internshipLocation = document.getElementById("internshipLocation");
-const internshipMode = document.getElementById("internshipMode");
-const internshipOpenings = document.getElementById("internshipOpenings");
+const internshipTitle =
+    document.getElementById("internshipTitle");
 
-const params = new URLSearchParams(window.location.search);
-const internshipId = params.get("id");
+const internshipDomain =
+    document.getElementById("internshipDomain");
+
+const internshipLocation =
+    document.getElementById("internshipLocation");
+
+const internshipMode =
+    document.getElementById("internshipMode");
+
+const internshipOpenings =
+    document.getElementById("internshipOpenings");
+
+
+// =====================================================
+// GET INTERNSHIP ID
+// =====================================================
+
+const params =
+    new URLSearchParams(window.location.search);
+
+const internshipId =
+    params.get("id");
 
 let currentInternship = null;
-
-const API_URL = "http://localhost:5000";
 
 
 // =====================================================
@@ -42,34 +61,68 @@ async function loadInternship() {
     showLoading();
 
     if (!internshipId) {
-        showError("No internship ID was provided.");
+
+        showError(
+            "No internship ID was provided."
+        );
+
         return;
     }
+
+
+    // PostgreSQL uses INTEGER IDs
+    // Example: 1, 2, 3, 4...
+
+    if (!/^\d+$/.test(internshipId)) {
+
+        showError(
+            "Invalid internship ID."
+        );
+
+        return;
+    }
+
 
     try {
 
         const response = await fetch(
-            `${API_URL}/api/internships/${encodeURIComponent(internshipId)}`
-        );
+    `${API_URL}/api/internships?${params.toString()}`
+)
 
-        const result = await response.json();
+
+        const result =
+            await response.json();
+
 
         if (!response.ok) {
+
             throw new Error(
-                result.message || "Internship could not be found."
+                result.message ||
+                "Internship could not be found."
             );
         }
 
-        currentInternship = result.data;
 
-        displayInternship(currentInternship);
+        currentInternship =
+            result.data;
+
+
+        displayInternship(
+            currentInternship
+        );
+
 
     } catch (error) {
 
-        console.error("Load internship error:", error);
+        console.error(
+            "Load internship error:",
+            error
+        );
+
 
         showError(
-            error.message || "Unable to load internship."
+            error.message ||
+            "Unable to load internship."
         );
     }
 }
@@ -82,23 +135,36 @@ async function loadInternship() {
 function displayInternship(internship) {
 
     internshipTitle.textContent =
-        internship.title || "Internship";
+        internship.title ||
+        "Internship";
+
 
     internshipDomain.textContent =
-        internship.company || "Company";
+        internship.company ||
+        "Company";
+
 
     internshipLocation.textContent =
-        internship.location || "Location";
+        internship.location ||
+        "Location";
+
 
     internshipMode.textContent =
-        internship.type || "Internship";
+        internship.type ||
+        internship.mode ||
+        "Internship";
+
 
     internshipOpenings.textContent =
-        "Available";
+        internship.openings
+            ? `${internship.openings} position${internship.openings === 1 ? "" : "s"}`
+            : "Available";
 
 
     loadingState.hidden = true;
+
     errorState.hidden = true;
+
     applyContent.hidden = false;
 }
 
@@ -116,7 +182,9 @@ function validateForm() {
 
     // NAME
 
-    const name = nameInput.value.trim();
+    const name =
+        nameInput.value.trim();
+
 
     if (!name) {
 
@@ -149,10 +217,13 @@ function validateForm() {
 
     // EMAIL
 
-    const email = emailInput.value.trim();
+    const email =
+        emailInput.value.trim();
+
 
     const emailPattern =
         /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
 
     if (!email) {
 
@@ -179,18 +250,23 @@ function validateForm() {
     const portfolio =
         portfolioInput.value.trim();
 
+
     if (portfolio) {
 
         try {
 
-            const url = new URL(portfolio);
+            const url =
+                new URL(portfolio);
+
 
             if (
                 url.protocol !== "http:" &&
                 url.protocol !== "https:"
             ) {
+
                 throw new Error();
             }
+
 
         } catch {
 
@@ -212,9 +288,13 @@ function validateForm() {
 // SHOW FIELD ERROR
 // =====================================================
 
-function showFieldError(element, message) {
+function showFieldError(
+    element,
+    message
+) {
 
-    element.textContent = message;
+    element.textContent =
+        message;
 }
 
 
@@ -225,10 +305,13 @@ function showFieldError(element, message) {
 function clearErrors() {
 
     nameError.textContent = "";
+
     emailError.textContent = "";
+
     portfolioError.textContent = "";
 
     formError.hidden = true;
+
     formError.textContent = "";
 }
 
@@ -261,7 +344,9 @@ applicationForm.addEventListener(
 
 
         submitButton.disabled = true;
-        submitButton.textContent = "Submitting...";
+
+        submitButton.textContent =
+            "Submitting...";
 
 
         try {
@@ -288,10 +373,14 @@ applicationForm.addEventListener(
                     method: "POST",
 
                     headers: {
-                        "Content-Type": "application/json"
+                        "Content-Type":
+                            "application/json"
                     },
 
-                    body: JSON.stringify(applicationData)
+                    body:
+                        JSON.stringify(
+                            applicationData
+                        )
                 }
             );
 
@@ -313,6 +402,7 @@ applicationForm.addEventListener(
 
             successState.hidden = false;
 
+
             successMessage.textContent =
                 `Your application for ${currentInternship.title} has been submitted successfully.`;
 
@@ -324,11 +414,14 @@ applicationForm.addEventListener(
                 error
             );
 
+
             formError.textContent =
                 error.message ||
                 "Something went wrong while submitting your application.";
 
+
             formError.hidden = false;
+
 
             submitButton.disabled = false;
 
@@ -346,7 +439,9 @@ applicationForm.addEventListener(
 function showLoading() {
 
     loadingState.hidden = false;
+
     errorState.hidden = true;
+
     applyContent.hidden = true;
 }
 
@@ -358,10 +453,13 @@ function showLoading() {
 function showError(message) {
 
     loadingState.hidden = true;
+
     errorState.hidden = false;
+
     applyContent.hidden = true;
 
-    errorMessage.textContent = message;
+    errorMessage.textContent =
+        message;
 }
 
 
@@ -369,10 +467,11 @@ function showError(message) {
 // RETRY
 // =====================================================
 
-retryButton.addEventListener(
-    "click",
-    loadInternship
-);
+if (retryButton) {
+    retryButton.addEventListener("click", function () {
+        loadInternship();
+    });
+}
 
 
 // =====================================================

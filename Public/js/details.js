@@ -1,3 +1,4 @@
+
 const loadingState = document.getElementById("loadingState");
 const errorState = document.getElementById("errorState");
 const errorMessage = document.getElementById("errorMessage");
@@ -11,6 +12,7 @@ const detailsDomain = document.getElementById("detailsDomain");
 const detailsTitleMain = document.getElementById("detailsTitleMain");
 const detailsMode = document.getElementById("detailsMode");
 const detailsLocation = document.getElementById("detailsLocation");
+
 
 const detailsDescription =
     document.getElementById("detailsDescription");
@@ -37,9 +39,12 @@ const applyButton =
     document.getElementById("applyButton");
 
 
+// Backend API
+const API_URL = "http://localhost:5000";
+
+
 // Get internship ID from URL
 const params = new URLSearchParams(window.location.search);
-
 const internshipId = params.get("id");
 
 
@@ -49,35 +54,36 @@ async function loadInternshipDetails() {
     showLoading();
 
     if (!internshipId) {
-
         showError("No internship ID was provided.");
-
         return;
     }
 
     try {
 
+        // ID must be a number
+        if (!/^\d+$/.test(internshipId)) {
+            throw new Error("Invalid internship ID.");
+        }
+
         const response = await fetch(
-            `/api/internships/${encodeURIComponent(internshipId)}`
-        );
+    `${API_URL}/api/internships?${params.toString()}`
+)
 
         const result = await response.json();
 
-
         if (!response.ok) {
-
             throw new Error(
+                result.message ||
                 result.data?.message ||
                 "Internship could not be found."
             );
         }
 
-
         displayInternship(result.data);
 
     } catch (error) {
 
-        console.error(error);
+        console.error("Load internship error:", error);
 
         showError(
             error.message ||
@@ -90,35 +96,37 @@ async function loadInternshipDetails() {
 // Display internship information
 function displayInternship(internship) {
 
-    // Page heading
-    detailsTitle.textContent = internship.title;
+    detailsTitle.textContent =
+        internship.title || "";
 
     detailsDomain.textContent =
-        `${internship.domain} • ${internship.mode}`;
+        `${internship.domain || internship.type || "Internship"} • ${internship.mode || ""}`;
 
 
-    // Main details
     detailsTitleMain.textContent =
-        internship.title;
+        internship.title || "";
 
     detailsMode.textContent =
-        internship.mode;
+        internship.mode || internship.type || "Internship";
 
     detailsLocation.textContent =
-        `📍 ${internship.location}`;
+        `📍 ${internship.location || "Not specified"}`;
 
 
-    // Description
     detailsDescription.textContent =
-        `Join our ${internship.domain} team as a ${internship.title}. 
-        This internship gives students practical experience, 
+        `Join our ${internship.domain || internship.type || "internship"} team as a ${internship.title || "an intern"}.
+        This internship gives students practical experience,
         mentorship, and an opportunity to work on real-world projects.`;
 
 
     // Skills
     detailsSkills.innerHTML = "";
 
-    internship.skills.forEach(skill => {
+    const skills = Array.isArray(internship.skills)
+        ? internship.skills
+        : [];
+
+    skills.forEach(skill => {
 
         const skillElement =
             document.createElement("span");
@@ -128,7 +136,6 @@ function displayInternship(internship) {
         skillElement.textContent = skill;
 
         detailsSkills.appendChild(skillElement);
-
     });
 
 
@@ -142,7 +149,6 @@ function displayInternship(internship) {
         "Good communication and problem-solving skills."
     ];
 
-
     requirements.forEach(requirement => {
 
         const listItem =
@@ -151,27 +157,28 @@ function displayInternship(internship) {
         listItem.textContent = requirement;
 
         detailsRequirements.appendChild(listItem);
-
     });
 
 
     // Overview
     overviewDomain.textContent =
-        internship.domain;
+        internship.domain || internship.type || "Internship";
 
     overviewMode.textContent =
-        internship.mode;
+        internship.mode || internship.type || "Not specified";
 
     overviewLocation.textContent =
-        internship.location;
+        internship.location || "Not specified";
+
+    const openings =
+        Number(internship.openings || 1);
 
     overviewOpenings.textContent =
-        `${internship.openings} position${
-            internship.openings === 1 ? "" : "s"
-        }`;
+        `${openings} position${openings === 1 ? "" : "s"}`;
 
 
-    // Apply button
+    // IMPORTANT:
+    // Use PostgreSQL integer ID
     applyButton.href =
         `apply.html?id=${encodeURIComponent(internship.id)}`;
 
@@ -209,11 +216,11 @@ function showError(message) {
 }
 
 
-// Retry
-retryButton.addEventListener(
-    "click",
-    loadInternshipDetails
-);
+if (retryButton) {
+    retryButton.addEventListener("click", function () {
+        loadInternshipDetails();
+    });
+}
 
 
 // Start
