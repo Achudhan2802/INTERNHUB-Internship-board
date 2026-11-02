@@ -1,82 +1,36 @@
-const loadingState =
-    document.getElementById("loadingState");
+const loadingState = document.getElementById("loadingState");
+const errorState = document.getElementById("errorState");
+const errorMessage = document.getElementById("errorMessage");
+const retryButton = document.getElementById("retryButton");
+const applyContent = document.getElementById("applyContent");
+const applicationForm = document.getElementById("applicationForm");
 
-const errorState =
-    document.getElementById("errorState");
+const nameInput = document.getElementById("name");
+const emailInput = document.getElementById("email");
+const portfolioInput = document.getElementById("portfolio");
 
-const errorMessage =
-    document.getElementById("errorMessage");
+const nameError = document.getElementById("nameError");
+const emailError = document.getElementById("emailError");
+const portfolioError = document.getElementById("portfolioError");
 
-const retryButton =
-    document.getElementById("retryButton");
+const submitButton = document.getElementById("submitButton");
+const formError = document.getElementById("formError");
 
-const applyContent =
-    document.getElementById("applyContent");
+const successState = document.getElementById("successState");
+const successMessage = document.getElementById("successMessage");
 
-const applicationForm =
-    document.getElementById("applicationForm");
+const internshipTitle = document.getElementById("internshipTitle");
+const internshipDomain = document.getElementById("internshipDomain");
+const internshipLocation = document.getElementById("internshipLocation");
+const internshipMode = document.getElementById("internshipMode");
+const internshipOpenings = document.getElementById("internshipOpenings");
 
-const nameInput =
-    document.getElementById("name");
-
-const emailInput =
-    document.getElementById("email");
-
-const portfolioInput =
-    document.getElementById("portfolio");
-
-const nameError =
-    document.getElementById("nameError");
-
-const emailError =
-    document.getElementById("emailError");
-
-const portfolioError =
-    document.getElementById("portfolioError");
-
-const submitButton =
-    document.getElementById("submitButton");
-
-const formError =
-    document.getElementById("formError");
-
-const successState =
-    document.getElementById("successState");
-
-const successMessage =
-    document.getElementById("successMessage");
-
-
-// Internship summary elements
-
-const internshipTitle =
-    document.getElementById("internshipTitle");
-
-const internshipDomain =
-    document.getElementById("internshipDomain");
-
-const internshipLocation =
-    document.getElementById("internshipLocation");
-
-const internshipMode =
-    document.getElementById("internshipMode");
-
-const internshipOpenings =
-    document.getElementById("internshipOpenings");
-
-
-// Get internship ID from URL
-
-const params =
-    new URLSearchParams(window.location.search);
-
-const internshipId =
-    params.get("id");
-
-
-// Store internship information
+const params = new URLSearchParams(window.location.search);
+const internshipId = params.get("id");
 
 let currentInternship = null;
+
+const API_URL = "http://localhost:5000";
 
 
 // =====================================================
@@ -88,51 +42,34 @@ async function loadInternship() {
     showLoading();
 
     if (!internshipId) {
-
-        showError(
-            "No internship ID was provided."
-        );
-
+        showError("No internship ID was provided.");
         return;
     }
-
 
     try {
 
         const response = await fetch(
-            `/api/internships/${encodeURIComponent(internshipId)}`
+            `${API_URL}/api/internships/${encodeURIComponent(internshipId)}`
         );
 
-
-        const result =
-            await response.json();
-
+        const result = await response.json();
 
         if (!response.ok) {
-
             throw new Error(
-                result.data?.message ||
-                "Internship could not be found."
+                result.message || "Internship could not be found."
             );
         }
 
+        currentInternship = result.data;
 
-        currentInternship =
-            result.data;
-
-
-        displayInternship(
-            currentInternship
-        );
-
+        displayInternship(currentInternship);
 
     } catch (error) {
 
-        console.error(error);
+        console.error("Load internship error:", error);
 
         showError(
-            error.message ||
-            "Unable to load internship."
+            error.message || "Unable to load internship."
         );
     }
 }
@@ -145,29 +82,23 @@ async function loadInternship() {
 function displayInternship(internship) {
 
     internshipTitle.textContent =
-        internship.title;
+        internship.title || "Internship";
 
     internshipDomain.textContent =
-        internship.domain;
+        internship.company || "Company";
 
     internshipLocation.textContent =
-        internship.location;
+        internship.location || "Location";
 
     internshipMode.textContent =
-        internship.mode;
+        internship.type || "Internship";
 
     internshipOpenings.textContent =
-        `${internship.openings} opening${
-            internship.openings === 1
-                ? ""
-                : "s"
-        }`;
+        "Available";
 
 
     loadingState.hidden = true;
-
     errorState.hidden = true;
-
     applyContent.hidden = false;
 }
 
@@ -180,15 +111,12 @@ function validateForm() {
 
     let isValid = true;
 
-
     clearErrors();
 
 
-    // ---------------- NAME ----------------
+    // NAME
 
-    const name =
-        nameInput.value.trim();
-
+    const name = nameInput.value.trim();
 
     if (!name) {
 
@@ -212,22 +140,19 @@ function validateForm() {
 
         showFieldError(
             nameError,
-            "Name must be less than 100 characters."
+            "Name must not exceed 100 characters."
         );
 
         isValid = false;
     }
 
 
-    // ---------------- EMAIL ----------------
+    // EMAIL
 
-    const email =
-        emailInput.value.trim();
-
+    const email = emailInput.value.trim();
 
     const emailPattern =
         /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
 
     if (!email) {
 
@@ -249,27 +174,22 @@ function validateForm() {
     }
 
 
-    // ---------------- PORTFOLIO ----------------
+    // PORTFOLIO
 
     const portfolio =
         portfolioInput.value.trim();
-
 
     if (portfolio) {
 
         try {
 
-            const url =
-                new URL(portfolio);
-
+            const url = new URL(portfolio);
 
             if (
                 url.protocol !== "http:" &&
                 url.protocol !== "https:"
             ) {
-
                 throw new Error();
-
             }
 
         } catch {
@@ -305,13 +225,10 @@ function showFieldError(element, message) {
 function clearErrors() {
 
     nameError.textContent = "";
-
     emailError.textContent = "";
-
     portfolioError.textContent = "";
 
     formError.hidden = true;
-
     formError.textContent = "";
 }
 
@@ -328,22 +245,30 @@ applicationForm.addEventListener(
 
 
         if (!validateForm()) {
+            return;
+        }
+
+
+        if (!currentInternship) {
+
+            formError.textContent =
+                "Internship information is not available.";
+
+            formError.hidden = false;
 
             return;
         }
 
 
         submitButton.disabled = true;
-
-        submitButton.textContent =
-            "Submitting...";
+        submitButton.textContent = "Submitting...";
 
 
         try {
 
             const applicationData = {
 
-                internshipId:
+                internship_id:
                     currentInternship.id,
 
                 name:
@@ -354,24 +279,19 @@ applicationForm.addEventListener(
 
                 portfolio:
                     portfolioInput.value.trim()
-
             };
 
 
             const response = await fetch(
-                "/api/applications",
+                `${API_URL}/api/applications`,
                 {
                     method: "POST",
 
                     headers: {
-                        "Content-Type":
-                            "application/json"
+                        "Content-Type": "application/json"
                     },
 
-                    body:
-                        JSON.stringify(
-                            applicationData
-                        )
+                    body: JSON.stringify(applicationData)
                 }
             );
 
@@ -383,27 +303,26 @@ applicationForm.addEventListener(
             if (!response.ok) {
 
                 throw new Error(
-                    result.data?.message ||
+                    result.message ||
                     "Application could not be submitted."
                 );
             }
 
-
-            // Success
 
             applicationForm.hidden = true;
 
             successState.hidden = false;
 
             successMessage.textContent =
-                `Your application for ${
-                    currentInternship.title
-                } has been submitted successfully.`;
+                `Your application for ${currentInternship.title} has been submitted successfully.`;
 
 
         } catch (error) {
 
-            console.error(error);
+            console.error(
+                "Application submission error:",
+                error
+            );
 
             formError.textContent =
                 error.message ||
@@ -411,13 +330,11 @@ applicationForm.addEventListener(
 
             formError.hidden = false;
 
-
             submitButton.disabled = false;
 
             submitButton.textContent =
                 "Submit Application →";
         }
-
     }
 );
 
@@ -429,9 +346,7 @@ applicationForm.addEventListener(
 function showLoading() {
 
     loadingState.hidden = false;
-
     errorState.hidden = true;
-
     applyContent.hidden = true;
 }
 
@@ -443,13 +358,10 @@ function showLoading() {
 function showError(message) {
 
     loadingState.hidden = true;
-
     errorState.hidden = false;
-
     applyContent.hidden = true;
 
-    errorMessage.textContent =
-        message;
+    errorMessage.textContent = message;
 }
 
 
